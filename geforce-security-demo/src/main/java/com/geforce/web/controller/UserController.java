@@ -3,10 +3,12 @@ package com.geforce.web.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.geforce.dao.User;
 import com.geforce.dao.UserQueryCondition;
+import com.geforce.exception.UserNotExistException;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,6 +83,8 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id) {
+//        throw new RuntimeException(id);
+//        throw new UsernameNotFoundException(id);
         User user = new User();
         user.setUsername("tom");
         return user;

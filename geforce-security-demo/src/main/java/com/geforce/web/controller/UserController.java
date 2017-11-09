@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.geforce.dao.User;
 import com.geforce.dao.UserQueryCondition;
 import com.geforce.exception.UserNotExistException;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.slf4j.Logger;
@@ -27,7 +30,8 @@ import java.util.List;
 public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    @ApiOperation(value = "创建用户",notes = "创建用户notes")
+    @ApiImplicitParams({@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")})
     @PostMapping
     public User create(@Valid @RequestBody User user,BindingResult errors) {
         if (errors.hasErrors()) {

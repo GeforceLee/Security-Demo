@@ -11,8 +11,8 @@ security:
     enabled: true
 server:
   port: 8080
-geforce:
-  security:
-    browser:
+#geforce:
+#  security:
+#    browser:
 #      loginPage: /demo-signIn.html
-      loginType: REDIRECT
+#      loginType: REDIRECT

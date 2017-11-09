@@ -6,6 +6,8 @@ import com.geforce.dao.UserQueryCondition;
 import com.geforce.exception.UserNotExistException;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,17 +25,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    private Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @PostMapping
     public User create(@Valid @RequestBody User user,BindingResult errors) {
         if (errors.hasErrors()) {
-            errors.getAllErrors().stream().forEach(error -> System.out.println(error.getDefaultMessage()));
+            errors.getAllErrors().stream().forEach(error -> logger.info(error.getDefaultMessage()));
         }
 
 
-        System.out.println(user.getId());
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getBirthday());
+        logger.info(user.getId());
+        logger.info(user.getUsername());
+        logger.info(user.getPassword());
+        logger.info(""+user.getBirthday());
 
         user.setId("1");
         return user;
@@ -44,14 +49,14 @@ public class UserController {
 
         if (errors.hasErrors()) {
             errors.getAllErrors().stream().forEach(error -> {
-                System.out.println(error.getDefaultMessage());
+                logger.info(error.getDefaultMessage());
             });
         }
-        System.out.println(id);
-        System.out.println(user.getId());
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getBirthday());
+        logger.info(id);
+        logger.info(user.getId());
+        logger.info(user.getUsername());
+        logger.info(user.getPassword());
+        logger.info(""+user.getBirthday());
 
         user.setId("1");
         return user;
@@ -59,7 +64,7 @@ public class UserController {
 
     @DeleteMapping("/{id:\\d+}")
     public void delete(@PathVariable String id) {
-        System.out.println(id);
+        logger.info(id);
     }
 
     @GetMapping
@@ -67,11 +72,11 @@ public class UserController {
     public List<User> query(UserQueryCondition condition,
                             @PageableDefault(page = 2, size = 17, sort = "username,asc") Pageable pageable) {
 
-        System.out.println(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
+        logger.info(ReflectionToStringBuilder.toString(condition, ToStringStyle.MULTI_LINE_STYLE));
 
-        System.out.println(pageable.getPageSize());
-        System.out.println(pageable.getPageNumber());
-        System.out.println(pageable.getSort());
+        logger.info(""+pageable.getPageSize());
+        logger.info(""+pageable.getPageNumber());
+        logger.info(""+pageable.getSort());
 
         List<User> users = new ArrayList<>();
         users.add(new User());

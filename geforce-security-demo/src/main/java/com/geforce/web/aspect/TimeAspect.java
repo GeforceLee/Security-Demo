@@ -18,7 +18,7 @@ public class TimeAspect {
 
     private Logger logger = LoggerFactory.getLogger(TimeAspect.class);
 
-    @Pointcut("execution(* com.geforce.web.controller.UserController.*(..))")
+    @Pointcut("execution(* com.geforce.web.controller.UserController.*(..)) || execution(* com.geforce.web.async.AsyncController.*(..))")
     public void usercontroller(){}
 
     @Around(value = "usercontroller()")
@@ -41,5 +41,8 @@ public class TimeAspect {
 
         return object;
     }
+
+
+
 }
 

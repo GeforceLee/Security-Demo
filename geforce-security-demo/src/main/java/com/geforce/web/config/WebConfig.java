@@ -17,7 +17,7 @@ import java.util.List;
  * @author geforce
  * @date 2017/11/8
  */
-@Configuration
+//@Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

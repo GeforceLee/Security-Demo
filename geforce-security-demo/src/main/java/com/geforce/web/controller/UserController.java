@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,14 @@ import java.util.List;
 public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @GetMapping("/me")
+    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user){
+
+        return user;
+    }
+
+
     @ApiOperation(value = "创建用户",notes = "创建用户notes")
     @ApiImplicitParams({@ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")})
     @PostMapping

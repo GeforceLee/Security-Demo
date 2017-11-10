@@ -16,3 +16,8 @@ server:
 #    browser:
 #      loginPage: /demo-signIn.html
 #      loginType: REDIRECT
+#    code:
+#      image:
+#        length: 6
+#        width: 100
+#        url: /user/*

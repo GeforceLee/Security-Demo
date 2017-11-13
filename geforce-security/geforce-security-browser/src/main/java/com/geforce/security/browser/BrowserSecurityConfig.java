@@ -1,10 +1,13 @@
 package com.geforce.security.browser;
 
+import com.geforce.security.core.authentication.sms.TempConfig;
 import com.geforce.security.core.properties.SecurityProperties;
+import com.geforce.security.core.validate.code.SmsCodeFilter;
 import com.geforce.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,19 +56,17 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         return tokenRepository;
     }
 
-
+    @Autowired
+    private TempConfig tempConfig;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-        validateCodeFilter.setAuthenticationFailureHandler(geAuthenticationFailureHandler);
-        validateCodeFilter.setSecurityProperties(securityProperties);
-        validateCodeFilter.afterPropertiesSet();
+
 
         http
 //                .httpBasic()
-                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+
                 .formLogin()
                     .loginPage("/authentication/require")
                     .loginProcessingUrl("/authentication/form")
@@ -80,12 +81,30 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/authentication/require",
                             securityProperties.getBrowser().getLoginPage(),
-                            "/code/image")
+                            "/code/image","/code/sms")
                     .permitAll()
                 .anyRequest()
                     .authenticated()
                     .and()
                 .csrf().disable();
+
+
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(geAuthenticationFailureHandler);
+        validateCodeFilter.setSecurityProperties(securityProperties);
+        validateCodeFilter.afterPropertiesSet();
+
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(geAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
+
+
+        http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.apply(tempConfig);
+
 
     }
 }

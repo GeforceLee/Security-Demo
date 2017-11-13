@@ -58,7 +58,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
 
         g.dispose();
 
-        return new ImageCode(image, sRand, securityProperties.getCode().getImage().getExprie());
+        return new ImageCode(image, sRand, securityProperties.getCode().getImage().getExpireIn());
     }
 
 

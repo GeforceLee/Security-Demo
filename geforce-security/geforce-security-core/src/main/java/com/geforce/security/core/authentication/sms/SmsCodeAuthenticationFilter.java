@@ -21,7 +21,7 @@ import java.io.IOException;
 public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    protected SmsCodeAuthenticationFilter() {
+    public SmsCodeAuthenticationFilter() {
         super(new AntPathRequestMatcher("/authentication/mobile","POST"));
     }
 

@@ -97,8 +97,10 @@ public class SmsCodeFilter extends OncePerRequestFilter implements InitializingB
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         boolean action = false;
+        logger.info(request.getRequestURI());
         for (String url :urls) {
             if (pathMatcher.match(url,request.getRequestURI())){
+
                 action = true;
                 break;
             }

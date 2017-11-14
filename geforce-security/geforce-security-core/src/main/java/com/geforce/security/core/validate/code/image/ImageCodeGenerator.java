@@ -1,7 +1,7 @@
-package com.geforce.security.core.validate.code;
+package com.geforce.security.core.validate.code.image;
 
 import com.geforce.security.core.properties.SecurityProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.geforce.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -13,6 +13,7 @@ import java.util.Random;
  * @author geforce
  * @date 2017/11/10
  */
+
 public class ImageCodeGenerator implements ValidateCodeGenerator {
 
 

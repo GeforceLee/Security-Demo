@@ -5,7 +5,7 @@ package com.geforce.security.core.properties;
  * @date 2017/11/9
  */
 public class BrowserProperties {
-    private String loginPage = "/geforce-signIn.html";
+    private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
     public String getLoginPage() {
         return loginPage;
@@ -16,13 +16,13 @@ public class BrowserProperties {
     }
 
 
-    private LoginType loginType = LoginType.JSON;
+    private LoginResponseType loginType = LoginResponseType.JSON;
 
-    public LoginType getLoginType() {
+    public LoginResponseType getLoginType() {
         return loginType;
     }
 
-    public void setLoginType(LoginType loginType) {
+    public void setLoginType(LoginResponseType loginType) {
         this.loginType = loginType;
     }
 

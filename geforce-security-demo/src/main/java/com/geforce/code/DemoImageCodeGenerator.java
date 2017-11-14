@@ -1,10 +1,9 @@
 package com.geforce.code;
 
-import com.geforce.security.core.validate.code.ImageCode;
+import com.geforce.security.core.validate.code.image.ImageCode;
 import com.geforce.security.core.validate.code.ValidateCodeGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**

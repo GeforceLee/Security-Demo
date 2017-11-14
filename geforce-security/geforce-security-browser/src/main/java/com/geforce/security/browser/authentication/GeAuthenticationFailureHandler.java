@@ -2,7 +2,7 @@ package com.geforce.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.geforce.security.browser.support.SimpleResponse;
-import com.geforce.security.core.properties.LoginType;
+import com.geforce.security.core.properties.LoginResponseType;
 import com.geforce.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class GeAuthenticationFailureHandler extends SimpleUrlAuthenticationFailu
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
         logger.info("登陆失败");
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())){
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())){
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));

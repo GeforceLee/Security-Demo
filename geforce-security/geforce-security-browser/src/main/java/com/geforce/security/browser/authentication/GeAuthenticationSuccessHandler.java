@@ -1,7 +1,7 @@
 package com.geforce.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.geforce.security.core.properties.LoginType;
+import com.geforce.security.core.properties.LoginResponseType;
 import com.geforce.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ public class GeAuthenticationSuccessHandler extends SavedRequestAwareAuthenticat
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         logger.info("登陆成功");
 
-        if (LoginType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         }else {

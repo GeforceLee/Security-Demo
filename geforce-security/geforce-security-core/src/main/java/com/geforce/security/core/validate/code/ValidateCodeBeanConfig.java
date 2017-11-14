@@ -1,6 +1,7 @@
 package com.geforce.security.core.validate.code;
 
 import com.geforce.security.core.properties.SecurityProperties;
+import com.geforce.security.core.validate.code.image.ImageCodeGenerator;
 import com.geforce.security.core.validate.code.sms.DefaultSmsCodeSender;
 import com.geforce.security.core.validate.code.sms.SmsCodeSender;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class ValidateCodeBeanConfig {
     private SecurityProperties securityProperties;
 
     @Bean
-    @ConditionalOnMissingBean(name = "imageCodeGenerator")
-    public ValidateCodeGenerator imageCodeGenerator() {
+    @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
+    public ValidateCodeGenerator imageValidateCodeGenerator() {
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
         codeGenerator.setSecurityProperties(securityProperties);
         return codeGenerator;

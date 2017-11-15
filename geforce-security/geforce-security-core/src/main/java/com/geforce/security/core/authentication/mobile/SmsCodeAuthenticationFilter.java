@@ -1,5 +1,6 @@
 package com.geforce.security.core.authentication.mobile;
 
+import com.geforce.security.core.properties.SecurityConstants;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -18,9 +19,8 @@ import java.io.IOException;
  */
 public class SmsCodeAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    public static final String GE_FORM_MOBILE_KEY = "mobile";
 
-    private String mobileParameter = GE_FORM_MOBILE_KEY;
+    private String mobileParameter = SecurityConstants.DEFAULT_PARAMETER_NAME_MOBILE;
 
     private boolean postOnly = true;
 

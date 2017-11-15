@@ -7,7 +7,8 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.stereotype.Component;
 
-import java.util.logging.Filter;
+import javax.servlet.Filter;
+
 
 /**
  * @author geforce

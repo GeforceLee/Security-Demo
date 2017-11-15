@@ -1,6 +1,7 @@
 package com.geforce.security.browser;
 
 import com.geforce.security.browser.support.SimpleResponse;
+import com.geforce.security.core.properties.SecurityConstants;
 import com.geforce.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -37,7 +38,14 @@ public class BrowserSecurityController {
     @Autowired
     private SecurityProperties securityProperties;
 
-    @RequestMapping("/authentication/require")
+    /**
+     * 当需要身份认证时,跳转到这里
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException {
         SavedRequest savedRequest = requestCache.getRequest(request,response);
@@ -52,6 +60,5 @@ public class BrowserSecurityController {
 
         return new SimpleResponse("访问的服务需要身份认证,请引导用户到登录页");
     }
-
 
 }

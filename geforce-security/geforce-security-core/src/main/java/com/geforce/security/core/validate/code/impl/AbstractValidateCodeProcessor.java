@@ -94,7 +94,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
 
     @SuppressWarnings("unchecked")
     @Override
-    public void validate(ServletWebRequest request) throws Exception {
+    public void validate(ServletWebRequest request) {
         ValidateCodeType processorType = getValidateCodeType(request);
         String sessionKey = getSessionKey(request);
         C codeInSession = (C) sessionStrategy.getAttribute(request,sessionKey);

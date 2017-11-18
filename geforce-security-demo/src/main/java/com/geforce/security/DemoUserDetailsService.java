@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @date 2017/11/9
  */
 @Component
-public class MyUserDetailsService implements UserDetailsService,SocialUserDetailsService {
+public class DemoUserDetailsService implements UserDetailsService,SocialUserDetailsService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 

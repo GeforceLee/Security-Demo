@@ -5,6 +5,17 @@ package com.geforce.security.core.properties;
  * @date 2017/11/9
  */
 public class BrowserProperties {
+
+    private String signUpUrl = "/geforce-signUp.html";
+
+    public String getSignUpUrl() {
+        return signUpUrl;
+    }
+
+    public void setSignUpUrl(String signUpUrl) {
+        this.signUpUrl = signUpUrl;
+    }
+
     private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
     public String getLoginPage() {

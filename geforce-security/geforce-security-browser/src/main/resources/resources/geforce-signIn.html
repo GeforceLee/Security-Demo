@@ -5,56 +5,64 @@
     <title>登陆</title>
 </head>
 <body>
-    <h2>标准登录页</h2>
-    <form action="/authentication/form" method="post">
-        <table>
-            <tr>
-                <td>用户名:</td>
-                <td><input type="text" name="username"></td>
-            </tr>
-            <tr>
-                <td>密码:</td>
-                <td><input type="password" name="password"></td>
-            </tr>
-            <tr>
-                <td>图形验证码:</td>
-                <td>
-                    <input type="text" name="imageCode">
-                    <img src="/code/image?width=200">
-                </td>
-            </tr>
-            <tr>
-                <td colspan='2'><input name="remember-me" type="checkbox" value="true" />记住我</td>
-            </tr>
-            <tr>
-               <td colspan="2"><button type="submit">登陆</button></td>
-            </tr>
-        </table>
+<h2>标准登录页</h2>
+<form action="/authentication/form" method="post">
+    <table>
+        <tr>
+            <td>用户名:</td>
+            <td><input type="text" name="username"></td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td>图形验证码:</td>
+            <td>
+                <input type="text" name="imageCode">
+                <img src="/code/image?width=200">
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'><input name="remember-me" type="checkbox" value="true"/>记住我</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登陆</button>
+            </td>
+        </tr>
+    </table>
 
-    </form>
+</form>
 
-    <h2>短信登陆</h2>
-    <form action="/authentication/mobile" method="post">
-        <table>
-            <tr>
-                <td>手机号:</td>
-                <td><input type="text" name="mobile" value="1851181xxxx"></td>
-            </tr>
-            <tr>
-                <td>短信验证码:</td>
-                <td>
-                    <input type="text" name="smsCode">
-                    <a href="/code/sms?mobile=1851181xxxx">发送验证码</a>
-                </td>
+<h2>短信登陆</h2>
+<form action="/authentication/mobile" method="post">
+    <table>
+        <tr>
+            <td>手机号:</td>
+            <td><input type="text" name="mobile" value="1851181xxxx"></td>
+        </tr>
+        <tr>
+            <td>短信验证码:</td>
+            <td>
+                <input type="text" name="smsCode">
+                <a href="/code/sms?mobile=1851181xxxx">发送验证码</a>
+            </td>
 
-            </tr>
-            <tr>
-                <td colspan="2"><button type="submit">登陆</button></td>
-            </tr>
-        </table>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登陆</button>
+            </td>
+        </tr>
+    </table>
 
-    </form>
+</form>
 
+<br>
+<h3>社交登陆</h3>
+
+<a href="/qqLogin/callback.do">QQ登陆</a>
 
 </body>
 </html>

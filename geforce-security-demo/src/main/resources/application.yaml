@@ -1,3 +1,5 @@
+
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -11,8 +13,8 @@ security:
     enabled: true
 server:
   port: 8080
-#geforce:
-#  security:
+geforce:
+  security:
 #    browser:
 #      loginPage: /demo-signIn.html
 #      loginType: REDIRECT
@@ -21,3 +23,11 @@ server:
 #        length: 6
 #        width: 100
 #        url: /user/*
+    social:
+      qq:
+        app-id : 100550231
+        app-secret : 69b6ab57b22f3c2fe6a6149274e3295e
+        provider-id : callback.do
+      filterProcessesUrl : /qqLogin
+      signUpUrl : /demo-signUp.html
+

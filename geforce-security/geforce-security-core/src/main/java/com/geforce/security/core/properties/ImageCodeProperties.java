@@ -1,11 +1,24 @@
 package com.geforce.security.core.properties;
 
 /**
+ * 图片验证码配置项
+ *
  * @author geforce
  * @date 2017/11/10
  */
 public class ImageCodeProperties extends SmsCodeProperties {
+    public ImageCodeProperties() {
+        setLength(4);
+    }
+
+    /**
+     * 图片宽
+     */
     private int width = 67;
+
+    /**
+     * 图片高
+     */
     private int height = 23;
 
     public int getWidth() {
@@ -25,7 +38,5 @@ public class ImageCodeProperties extends SmsCodeProperties {
         this.height = height;
     }
 
-    public ImageCodeProperties() {
-        setLength(4);
-    }
+
 }

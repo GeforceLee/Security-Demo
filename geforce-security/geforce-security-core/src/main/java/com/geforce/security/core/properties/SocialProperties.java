@@ -1,16 +1,22 @@
 package com.geforce.security.core.properties;
 
 /**
+ * 社交登录配置项
+ *
  * @author geforce
  * @date 2017/11/17
  */
 public class SocialProperties {
 
+    /**
+     * 社交登录功能拦截的url
+     *
+     */
     private String filterProcessesUrl = "/auth";
 
-    private String signUpUrl = "/geforce-signUp.html";
-
     private QQProperties qq = new QQProperties();
+
+    private WeixinProperties weixin = new WeixinProperties();
 
     public QQProperties getQq() {
         return qq;
@@ -28,11 +34,5 @@ public class SocialProperties {
         this.filterProcessesUrl = filterProcessesUrl;
     }
 
-    public String getSignUpUrl() {
-        return signUpUrl;
-    }
 
-    public void setSignUpUrl(String signUpUrl) {
-        this.signUpUrl = signUpUrl;
-    }
 }

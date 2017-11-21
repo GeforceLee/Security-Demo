@@ -34,5 +34,11 @@ public class SocialProperties {
         this.filterProcessesUrl = filterProcessesUrl;
     }
 
+    public WeixinProperties getWeixin() {
+        return weixin;
+    }
 
+    public void setWeixin(WeixinProperties weixin) {
+        this.weixin = weixin;
+    }
 }

@@ -3,11 +3,15 @@ package com.geforce.security.core.validate.code;
 import com.geforce.security.core.properties.SecurityConstants;
 
 /**
+ * 校验码类型
  * @author geforce
  * @date 2017/11/14
  */
 public enum ValidateCodeType {
 
+    /**
+     * 短信验证码
+     */
     SMS {
         @Override
         public String getParamNameOnValidate() {
@@ -15,6 +19,9 @@ public enum ValidateCodeType {
         }
     },
 
+    /**
+     * 图片验证码
+     */
     IMAGE {
         @Override
         public String getParamNameOnValidate() {
@@ -23,5 +30,9 @@ public enum ValidateCodeType {
     };
 
 
+    /**
+     * 校验时从请求中获取的参数的名字
+     * @return
+     */
     public abstract String getParamNameOnValidate();
 }

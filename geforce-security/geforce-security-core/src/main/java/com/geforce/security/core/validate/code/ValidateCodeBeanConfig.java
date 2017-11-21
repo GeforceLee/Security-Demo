@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * 验证码相关的扩展点配置.配置在这里的Bean,业务系统都可通过声明同类型的Bean来覆盖安全模块
+ * 默认的配置
+ *
+ *
  * @author geforce
  * @date 2017/11/10
  */
@@ -18,6 +22,10 @@ public class ValidateCodeBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
 
+    /**
+     * 图片验证码图片生成器
+     * @return
+     */
     @Bean
     @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
     public ValidateCodeGenerator imageValidateCodeGenerator() {
@@ -27,6 +35,10 @@ public class ValidateCodeBeanConfig {
     }
 
 
+    /**
+     * 图片验证码发送器
+     * @return
+     */
     @Bean
     @ConditionalOnMissingBean(SmsCodeSender.class)
     public SmsCodeSender smsCodeSender(){

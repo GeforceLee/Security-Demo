@@ -1,7 +1,7 @@
 package com.geforce.security.browser.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.geforce.security.browser.support.SimpleResponse;
+import com.geforce.security.core.support.SimpleResponse;
 import com.geforce.security.core.properties.LoginResponseType;
 import com.geforce.security.core.properties.SecurityProperties;
 import org.slf4j.Logger;

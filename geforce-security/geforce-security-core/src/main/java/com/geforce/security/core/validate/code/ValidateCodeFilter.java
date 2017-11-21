@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 验证码的过滤器
+ *
  * @author geforce
  * @date 2017/11/9
  * OncePerRequestFilter  保证每次请求 只经过一次
@@ -74,10 +76,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM,ValidateCodeType.IMAGE);
+        urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM,ValidateCodeType.IMAGE);
         addUrlToMap(securityProperties.getCode().getImage().getUrl(),ValidateCodeType.IMAGE);
 
-        urlMap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,ValidateCodeType.SMS);
+        urlMap.put(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,ValidateCodeType.SMS);
         addUrlToMap(securityProperties.getCode().getSms().getUrl(),ValidateCodeType.SMS);
 
     }

@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 /**
+ * 图片验证码
+ *
  * @author geforce
  * @date 2017/11/9
  */

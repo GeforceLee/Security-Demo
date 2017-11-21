@@ -12,20 +12,20 @@ import org.springframework.web.context.request.ServletWebRequest;
 import java.util.Map;
 
 /**
+ * 抽象的图片验证码处理器
  * @author geforce
  * @date 2017/11/13
  */
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
     /**
-     * 操作session的工具
+     * 收集系统中所有的 {@link ValidateCodeGenerator} 接口的实现
      */
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
-
     @Autowired
     private Map<String,ValidateCodeGenerator> validateCodeGenerators;
 
+    @Autowired
+    private ValidateCodeRepository validateCodeRepository;
 
 
     @Override
@@ -60,17 +60,8 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      * @param validateCode
      */
     private void save(ServletWebRequest request, C validateCode) {
-        sessionStrategy.setAttribute(request,getSessionKey(request),validateCode);
-    }
-
-
-    /**
-     * 构建验证码放入session的key
-     * @param request
-     * @return
-     */
-    private String getSessionKey(ServletWebRequest request) {
-        return SESSION_KEY_PREFIX + getValidateCodeType(request).toString().toUpperCase();
+        ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
+        validateCodeRepository.save(request,code,getValidateCodeType(request));
     }
 
 
@@ -80,6 +71,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      * @param validateCode
      */
     protected abstract void send(ServletWebRequest request, C validateCode)throws Exception;
+
 
 
     /**
@@ -95,35 +87,35 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @SuppressWarnings("unchecked")
     @Override
     public void validate(ServletWebRequest request) {
-        ValidateCodeType processorType = getValidateCodeType(request);
-        String sessionKey = getSessionKey(request);
-        C codeInSession = (C) sessionStrategy.getAttribute(request,sessionKey);
+        ValidateCodeType codeType = getValidateCodeType(request);
+
+        C codeInSession = (C) validateCodeRepository.get(request,codeType);
 
         String codeInRequest;
         try {
-            codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),processorType.getParamNameOnValidate());
+            codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),codeType.getParamNameOnValidate());
         }catch (ServletRequestBindingException e){
-            throw new ValidateCodeException("获取验证失败");
+            throw new ValidateCodeException("获取验证的值失败");
         }
 
         if (StringUtils.isBlank(codeInRequest)){
-            throw new ValidateCodeException(processorType+"验证码不能为空");
+            throw new ValidateCodeException(codeType+"验证码的值不能为空");
         }
 
         if (codeInSession == null) {
-            throw new ValidateCodeException(processorType+"验证码不存在");
+            throw new ValidateCodeException(codeType+"验证码不存在");
         }
 
         if (codeInSession.isExpried()) {
-            sessionStrategy.removeAttribute(request,sessionKey);
-            throw new ValidateCodeException(processorType+"验证码已过期");
+            validateCodeRepository.remove(request,codeType);
+            throw new ValidateCodeException(codeType+"验证码已过期");
         }
 
 
         if (!StringUtils.equals(codeInSession.getCode(),codeInRequest)){
-            throw new ValidateCodeException(processorType+"验证码不匹配");
+            throw new ValidateCodeException(codeType+"验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request,sessionKey);
+        validateCodeRepository.remove(request,codeType);
     }
 }

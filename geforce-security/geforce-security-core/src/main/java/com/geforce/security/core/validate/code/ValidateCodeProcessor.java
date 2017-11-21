@@ -5,12 +5,11 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.ServletRequest;
 
 /**
+ * 校验码处理器,封装不同校验码的处理逻辑
  * @author geforce
  * @date 2017/11/13
  */
 public interface ValidateCodeProcessor {
-
-    String SESSION_KEY_PREFIX = "SESSION_KEY_FOR_CODE_";
 
 
     /**

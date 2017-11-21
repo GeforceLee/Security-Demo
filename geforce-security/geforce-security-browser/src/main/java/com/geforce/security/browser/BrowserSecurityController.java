@@ -1,9 +1,9 @@
 package com.geforce.security.browser;
 
-import com.geforce.security.browser.support.SimpleResponse;
+import com.geforce.security.core.support.SimpleResponse;
 import com.geforce.security.core.properties.SecurityConstants;
 import com.geforce.security.core.properties.SecurityProperties;
-import com.geforce.security.core.social.qq.SocialUserInfo;
+import com.geforce.security.core.social.support.SocialUserInfo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

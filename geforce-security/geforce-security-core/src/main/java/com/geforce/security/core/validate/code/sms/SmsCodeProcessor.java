@@ -9,6 +9,8 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
+ * 短信验证码处理器
+ *
  * @author geforce
  * @date 2017/11/13
  */

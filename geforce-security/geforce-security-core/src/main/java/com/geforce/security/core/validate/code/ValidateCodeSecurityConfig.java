@@ -11,6 +11,7 @@ import javax.servlet.Filter;
 
 
 /**
+ * 校验码相关安全配置
  * @author geforce
  * @date 2017/11/14
  */

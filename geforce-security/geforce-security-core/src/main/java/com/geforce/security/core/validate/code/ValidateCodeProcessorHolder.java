@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
+ * 校验码处理管理器
+ *
  * @author geforce
  * @date 2017/11/14
  */

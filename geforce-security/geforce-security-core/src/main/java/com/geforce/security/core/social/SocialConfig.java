@@ -1,7 +1,9 @@
-package com.geforce.security.core.social.qq;
+package com.geforce.security.core.social;
 
 import com.geforce.security.core.properties.SecurityProperties;
 import com.geforce.security.core.social.GeforceSpringSocialConfigurer;
+import com.geforce.security.core.social.support.GeforceSpringSocialConfigurer;
+import com.geforce.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +30,14 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private SecurityProperties securityProperties;
+
     @Autowired(required = false)
     private ConnectionSignUp connectionSignUp;
 
-    @Autowired
-    private SecurityProperties securityProperties;
+    @Autowired(required = false)
+    private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
 
 
 
@@ -46,15 +51,23 @@ public class SocialConfig extends SocialConfigurerAdapter {
         return repository;
     }
 
+    /**
+     * 社交登录配置类,供浏览器或APP模块引入设计登录配置用
+     * @return
+     */
     @Bean
     public SpringSocialConfigurer geforceSocialSecurityConfig(){
         String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
-        SpringSocialConfigurer configurer = new GeforceSpringSocialConfigurer(filterProcessesUrl);
-        configurer.signupUrl(securityProperties.getSocial().getSignUpUrl());
+        GeforceSpringSocialConfigurer configurer = new GeforceSpringSocialConfigurer(filterProcessesUrl);
+        configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
         return configurer;
     }
 
-
+    /**
+     * 用来处理注册流程的工具类
+     * @param connectionFactoryLocator
+     * @return
+     */
     @Bean
     public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator) {
         return new ProviderSignInUtils(connectionFactoryLocator,getUsersConnectionRepository(connectionFactoryLocator));

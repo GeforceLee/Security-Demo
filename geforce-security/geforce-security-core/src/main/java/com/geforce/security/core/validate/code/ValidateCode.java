@@ -1,13 +1,15 @@
 package com.geforce.security.core.validate.code;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * 验证码封装信息类
  * @author geforce
  * @date 2017/11/10
  */
-public class ValidateCode {
+public class ValidateCode implements Serializable{
     private String code;
 
     private LocalDateTime expireTime;

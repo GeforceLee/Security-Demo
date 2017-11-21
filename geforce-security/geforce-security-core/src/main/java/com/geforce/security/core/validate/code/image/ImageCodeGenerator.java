@@ -2,6 +2,7 @@ package com.geforce.security.core.validate.code.image;
 
 import com.geforce.security.core.properties.SecurityProperties;
 import com.geforce.security.core.validate.code.ValidateCodeGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -10,13 +11,15 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
+ * 默认的图片验证码生成器
+ *
  * @author geforce
  * @date 2017/11/10
  */
 
 public class ImageCodeGenerator implements ValidateCodeGenerator {
 
-
+    @Autowired
     private SecurityProperties securityProperties;
 
     public SecurityProperties getSecurityProperties() {

@@ -1,6 +1,8 @@
-package com.geforce.security.browser.support;
+package com.geforce.security.core.support;
 
 /**
+ * 简单响应的封装类
+ *
  * @author geforce
  * @date 2017/11/9
  */

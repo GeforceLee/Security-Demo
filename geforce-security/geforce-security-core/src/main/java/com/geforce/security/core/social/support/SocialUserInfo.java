@@ -1,4 +1,4 @@
-package com.geforce.security.core.social.qq;
+package com.geforce.security.core.social.support;
 
 /**
  * @author geforce

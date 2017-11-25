@@ -1,10 +1,8 @@
 package com.geforce.security.browser;
 
-import com.geforce.security.core.authentication.AbstractChannelSecurityConfig;
 import com.geforce.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.geforce.security.core.properties.SecurityConstants;
 import com.geforce.security.core.properties.SecurityProperties;
-import com.geforce.security.core.validate.code.ValidateCodeFilter;
 import com.geforce.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.social.security.SpringSocialConfigurer;

@@ -11,12 +11,14 @@ public class BrowserProperties {
     /**
      * session管理配置项
      */
-    private SessionProperties sessionProperties = new SessionProperties();
+    private SessionProperties session = new SessionProperties();
+
+
 
     /**
      * 登录页面,当引发登录行为的url以html结尾时,会跳到这里配置的url上
      */
-    private String signInUrl = SecurityConstants.DEFAULT_SIGN_IN_PAGE_URL;
+    private String signInPage = SecurityConstants.DEFAULT_SIGN_IN_PAGE_URL;
 
     /**
      * '记住我'功能的有效时间,默认1小时
@@ -46,20 +48,20 @@ public class BrowserProperties {
     private String signInSuccessUrl;
 
 
-    public SessionProperties getSessionProperties() {
-        return sessionProperties;
+    public SessionProperties getSession() {
+        return session;
     }
 
-    public void setSessionProperties(SessionProperties sessionProperties) {
-        this.sessionProperties = sessionProperties;
+    public void setSession(SessionProperties session) {
+        this.session = session;
     }
 
-    public String getSignInUrl() {
-        return signInUrl;
+    public String getSignInPage() {
+        return signInPage;
     }
 
-    public void setSignInUrl(String signInUrl) {
-        this.signInUrl = signInUrl;
+    public void setSignInPage(String signInPage) {
+        this.signInPage = signInPage;
     }
 
     public int getRememberMeSeconds() {

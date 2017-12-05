@@ -1,5 +1,6 @@
 package com.geforce.security.browser;
 
+import com.geforce.security.core.social.SocialController;
 import com.geforce.security.core.support.SimpleResponse;
 import com.geforce.security.core.properties.SecurityConstants;
 import com.geforce.security.core.properties.SecurityProperties;
@@ -27,11 +28,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 浏览器环境下与安全相关的服务
+ *
  * @author geforce
  * @date 2017/11/9
  */
 @RestController
-public class BrowserSecurityController {
+public class BrowserSecurityController extends SocialController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -62,24 +65,23 @@ public class BrowserSecurityController {
             String targetUrl = savedRequest.getRedirectUrl();
             logger.info("引发条状的请求是:" + targetUrl);
             if (StringUtils.endsWith(targetUrl,".html")){
-                redirectStrategy.sendRedirect(request,response,securityProperties.getBrowser().getLoginPage());
+                redirectStrategy.sendRedirect(request,response,securityProperties.getBrowser().getSignInPage());
             }
         }
 
         return new SimpleResponse("访问的服务需要身份认证,请引导用户到登录页");
     }
 
-    @GetMapping("/social/user")
+    /**
+     * 用户第一次社交登录时,会议到用户注册或绑定,此服务用于在注册互或绑定页面获取社交网站用户信息
+     *
+     * @param request
+     * @return
+     */
+    @GetMapping(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL)
     public SocialUserInfo getSocialUserInfo(HttpServletRequest request) {
-        SocialUserInfo socialUserInfo = null;
+
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
-        if (connection != null) {
-            socialUserInfo = new SocialUserInfo();
-            socialUserInfo.setProviderId(connection.getKey().getProviderId());
-            socialUserInfo.setProviderUserId(connection.getKey().getProviderUserId());
-            socialUserInfo.setNickname(connection.getDisplayName());
-            socialUserInfo.setHeadimg(connection.getImageUrl());
-        }
-        return socialUserInfo;
+        return buildSocialUserInfo(connection);
     }
 }

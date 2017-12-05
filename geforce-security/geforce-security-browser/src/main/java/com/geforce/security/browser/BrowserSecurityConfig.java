@@ -1,6 +1,8 @@
 package com.geforce.security.browser;
 
+import com.geforce.security.core.authentication.FormAuthenticationConfig;
 import com.geforce.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.geforce.security.core.authorize.AuthorizeConfigManager;
 import com.geforce.security.core.properties.SecurityConstants;
 import com.geforce.security.core.properties.SecurityProperties;
 import com.geforce.security.core.validate.code.ValidateCodeSecurityConfig;
@@ -8,21 +10,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
 /**
+ * 浏览器环境下安全配置
+ *
  * @author geforce
  * @date 2017/11/9
  */
 @Configuration
-public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
+public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityProperties securityProperties;
@@ -42,6 +50,21 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SpringSocialConfigurer geforceSocialSecurityConfig;
 
+    @Autowired
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+
+    @Autowired
+    private InvalidSessionStrategy invalidSessionStrategy;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
+    @Autowired
+    private FormAuthenticationConfig formAuthenticationConfig;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -49,19 +72,13 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     }
 
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(dataSource);
-//        tokenRepository.setCreateTableOnStartup(true);
-        return tokenRepository;
-    }
+
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        applyPasswordAuthenticationConfig(http);
+        formAuthenticationConfig.configure(http);
 
         http.apply(validateCodeSecurityConfig)
                 .and()
@@ -69,22 +86,33 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
             .apply(geforceSocialSecurityConfig)
                 .and()
+                //记住我配置,如果想在'记住我'登录时记录日志,可以注册一个InteractiveAuthenticationSuccessEvent事件监听器
             .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
-            .authorizeRequests()
-                .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                        securityProperties.getSocial().getSignUpUrl(),
-                        "/user/signUp","/social/user"
-                ).permitAll()
-                .anyRequest().authenticated()
+            .sessionManagement()
+                .invalidSessionStrategy(invalidSessionStrategy)
+                .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+                .expiredSessionStrategy(sessionInformationExpiredStrategy)
+                .and()
+                .and()
+            .logout()
+                .logoutUrl("/signOut")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
                 .and()
             .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(true);
+        return tokenRepository;
     }
 }

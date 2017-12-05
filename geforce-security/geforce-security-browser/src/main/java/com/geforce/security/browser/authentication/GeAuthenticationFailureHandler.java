@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 浏览器环境下登录失败的处理器
+ *
  * @author geforce
  * @date 2017/11/9
  */
